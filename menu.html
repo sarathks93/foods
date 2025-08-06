@@ -12,6 +12,8 @@
     <!-- Fontawesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <title>Our Menu | Nizami Sevindi</title>
+    var launchScriptUrl = "https://assets.adobedtm.com/e72b4113c11a/474a0cf5ae04/launch-b725e460a85e-development.min.js";
+
 </head>
 <body>
 
@@ -169,6 +171,15 @@
 <script src="./script.js"></script>
 <script>
 window.addEventListener("load", function(){
+  var launchScriptUrl = "https://assets.adobedtm.com/e72b4113c11a/474a0cf5ae04/launch-b725e460a85e-development.min.js";
+
+  function loadLaunchScript() {
+    var script = document.createElement("script");
+    script.src = launchScriptUrl;
+    script.async = true;
+    document.head.appendChild(script);
+  }
+
   window.cookieconsent.initialise({
     palette: {
       popup: {
@@ -191,16 +202,20 @@ window.addEventListener("load", function(){
     },
     type: "opt-in",
     revokable: true,
-    onInitialise: function(status) {
-      var type = this.options.type;
-      var didConsent = this.hasConsented();
-      if (type == 'opt-in' && didConsent) {
-        // enable cookies here
+    onInitialise: function (status) {
+      if (this.hasConsented()) {
+        loadLaunchScript();
+      }
+    },
+    onStatusChange: function(status) {
+      if (this.hasConsented()) {
+        loadLaunchScript();
       }
     }
   });
 });
 </script>
+
 
 </body>
 </html>
